@@ -41,7 +41,7 @@ public class DhView extends View {
     private int mCircleRadius = -1;
     private int mTickAlpha;
     private int duringTime = 1000;
-    private boolean isAnimationRunning ;
+    private boolean isAnimationRunning;
     private AnimatorSet mAnimatorSet;
 
     public DhView(Context context) {
@@ -61,7 +61,7 @@ public class DhView extends View {
         ObjectAnimator ringProgress = ObjectAnimator.ofInt(this, "ringProgress", 0, 360);
         ringProgress.setDuration(duringTime);
         ringProgress.setInterpolator(null);
-        ObjectAnimator circleRadius = ObjectAnimator.ofInt(this, "circleRadius", mRadius-5, 0);
+        ObjectAnimator circleRadius = ObjectAnimator.ofInt(this, "circleRadius", mRadius - 5, 0);
         circleRadius.setInterpolator(new DecelerateInterpolator());
         circleRadius.setDuration(500);
 
@@ -73,13 +73,13 @@ public class DhView extends View {
                 .getStrokeWidth() / scale);
         circleRadius.setDuration(500);
         AnimatorSet alphaAndScaleAnimatorSet = new AnimatorSet();
-        alphaAndScaleAnimatorSet.playTogether(tickAlpha,ringStrokeWidth);
+        alphaAndScaleAnimatorSet.playTogether(tickAlpha, ringStrokeWidth);
         mAnimatorSet = new AnimatorSet();
-        mAnimatorSet.playSequentially(ringProgress,circleRadius,alphaAndScaleAnimatorSet);
+        mAnimatorSet.playSequentially(ringProgress, circleRadius, alphaAndScaleAnimatorSet);
     }
 
     private void setRingStrokeWidth(float ringStrokeWidth) {
-        Log.d(TAG,"ringStrokeWidth="+ringStrokeWidth);
+        Log.d(TAG, "ringStrokeWidth=" + ringStrokeWidth);
         mPaintRing.setStrokeWidth(ringStrokeWidth);
         postInvalidate();
     }
@@ -160,7 +160,7 @@ public class DhView extends View {
         mCenterX = getMeasuredWidth() / 2;
         mCenterY = getMeasuredHeight() / 2;
         mRect.set(mCenterX - mRadius, mCenterY - mRadius, mCenterX + mRadius, mCenterY + mRadius);
-        Log.d(TAG1,"onMeasureRect.="+mRect);
+        Log.d(TAG1, "onMeasureRect.=" + mRect);
         mPoints[0] = mCenterX - mTickRadius + tickRadiusOffset;
         mPoints[1] = (float) mCenterY;
         mPoints[2] = mCenterX - mTickRadius / 2 + tickRadiusOffset;
@@ -183,17 +183,17 @@ public class DhView extends View {
 //        画圆弧
         mPaintRing.setARGB(255, 239, 209, 87);
         canvas.drawArc(mRect, 90, mRingProgress, false, mPaintRing);
-        Log.d(TAG1,"mRingProgress.="+mRingProgress);
+        Log.d(TAG1, "mRingProgress.=" + mRingProgress);
         //画黄色背景
         mPaintCircle.setARGB(255, 239, 209, 87);
-        canvas.drawCircle(mCenterX, mCenterY,  mRingProgress == 360 ? mRadius : 0 , mPaintCircle);
-        if(mRingProgress == 360){
+        canvas.drawCircle(mCenterX, mCenterY, mRingProgress == 360 ? mRadius : 0, mPaintCircle);
+        if (mRingProgress == 360) {
 
             mPaintCircle.setARGB(255, 255, 255, 255);
             canvas.drawCircle(mCenterX, mCenterY, mCircleRadius, mPaintCircle);
         }
 
-        if(mCircleRadius == 0){
+        if (mCircleRadius == 0) {
             canvas.drawLines(mPoints, mPaintTick);
             canvas.drawArc(mRect, 90, 360, false, mPaintRing);
         }
