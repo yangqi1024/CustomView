@@ -1,4 +1,4 @@
-package com.yq.customview;
+package com.yq.customview.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

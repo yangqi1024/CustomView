@@ -13,7 +13,8 @@
     android:layout_height="wrap_content"
     android:text="start"
     />
-   <com.yq.customview.DhView
+
+   <com.yq.customview.view.DhView
        android:id="@+id/dh"
        android:layout_width="50dp"
        android:layout_height="50dp"

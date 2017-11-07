@@ -1,9 +1,12 @@
-package com.yq.customview;
+package com.yq.customview.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.yq.customview.R;
+import com.yq.customview.view.DhView;
 
 /**
  * Description ...
