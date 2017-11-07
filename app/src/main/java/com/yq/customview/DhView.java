@@ -63,7 +63,7 @@ public class DhView extends View {
         ringProgress.setInterpolator(null);
         ObjectAnimator circleRadius = ObjectAnimator.ofInt(this, "circleRadius", mRadius-5, 0);
         circleRadius.setInterpolator(new DecelerateInterpolator());
-        circleRadius.setDuration(duringTime);
+        circleRadius.setDuration(500);
 
         ObjectAnimator tickAlpha = ObjectAnimator.ofInt(this, "tickAlpha", 0, 255);
         circleRadius.setDuration(200);
@@ -71,7 +71,7 @@ public class DhView extends View {
         ObjectAnimator ringStrokeWidth = ObjectAnimator.ofFloat(this, "ringStrokeWidth", mPaintRing.getStrokeWidth(), mPaintRing
                 .getStrokeWidth() * scale, mPaintRing
                 .getStrokeWidth() / scale);
-        circleRadius.setDuration(duringTime);
+        circleRadius.setDuration(500);
         AnimatorSet alphaAndScaleAnimatorSet = new AnimatorSet();
         alphaAndScaleAnimatorSet.playTogether(tickAlpha,ringStrokeWidth);
         mAnimatorSet = new AnimatorSet();
