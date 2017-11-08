@@ -33,6 +33,7 @@ public class RectView extends View {
     private Path rectPath = new Path();
     private Paint mLinePaint;
     private Paint mRectPaint;
+    private Paint mTextPaint;
     private ArrayList<RectBean> mData;
     private int mMeasuredWidth;
     private int mMeasuredHeight;
@@ -55,6 +56,9 @@ public class RectView extends View {
         mLinePaint.setColor(Color.parseColor("#FFFFFFFF"));
         mLinePaint.setStyle(Paint.Style.STROKE);
 
+        mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mTextPaint.setColor(Color.parseColor("#FFFFFFFF"));
+        mTextPaint.setTextSize(30);
         mRectPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mRectPaint.setColor(Color.parseColor("#FF72B916"));
     }
@@ -105,6 +109,10 @@ public class RectView extends View {
         super.onDraw(canvas);
         canvas.drawPath(linePath, mLinePaint);
         canvas.drawPath(rectPath, mRectPaint);
+        for (int i = 0; i < mData.size(); i++) {
+            RectBean rectBean = mData.get(i);
+            canvas.drawText(rectBean.getTitle(), leftMargin + spaceWidth * (i + 1) + rectWidth * i, mMeasuredHeight - bottomMargin + dip2px(10), mTextPaint);
+        }
     }
 
     public int dip2px(float dpValue) {

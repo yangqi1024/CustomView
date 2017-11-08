@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".activity.DhActivity"/>
         <activity android:name=".activity.RectActivity"/>
+        <activity android:name=".activity.ProgressActivity"/>
     </application>
 
 </manifest>
