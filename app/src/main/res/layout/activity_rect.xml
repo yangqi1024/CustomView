@@ -9,6 +9,7 @@
     tools:context="com.yq.customview.MainActivity">
 
     <com.yq.customview.view.RectView
+        android:id="@+id/rect"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
 </RelativeLayout>
