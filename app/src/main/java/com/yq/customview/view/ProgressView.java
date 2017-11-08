@@ -27,6 +27,7 @@ public class ProgressView extends View {
     private int mWidth;
     private int padding = dip2px(5);
     private RectF rect = new RectF();
+    private Rect mTextRect = new Rect();
     private ObjectAnimator mObjectAnimator;
     private boolean isAnimIng = false;
     private int mCenterX;
@@ -82,10 +83,8 @@ public class ProgressView extends View {
         super.onDraw(canvas);
         canvas.drawArc(rect, -90, mProgress, false, mSrcPaint);
         String text = String.valueOf(Math.rint(mProgress * 100 / 360) + "%");
-        Rect rect = new Rect();
-        mTextPaint.getTextBounds(text, 0, text.length(), rect);
-
-        canvas.drawText(text, mCenterX - rect.width() / 2, mCenterX + rect.height() / 2, mTextPaint);
+        mTextPaint.getTextBounds(text, 0, text.length(), mTextRect);
+        canvas.drawText(text, mCenterX - mTextRect.width() / 2, mCenterX + mTextRect.height() / 2, mTextPaint);
         if (!isAnimIng) {
             isAnimIng = true;
             mObjectAnimator.start();

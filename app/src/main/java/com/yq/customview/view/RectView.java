@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -37,7 +38,7 @@ public class RectView extends View {
     private ArrayList<RectBean> mData;
     private int mMeasuredWidth;
     private int mMeasuredHeight;
-
+    private Rect mTextRect = new Rect();
     public RectView(Context context) {
         this(context, null);
     }
@@ -111,7 +112,9 @@ public class RectView extends View {
         canvas.drawPath(rectPath, mRectPaint);
         for (int i = 0; i < mData.size(); i++) {
             RectBean rectBean = mData.get(i);
-            canvas.drawText(rectBean.getTitle(), leftMargin + spaceWidth * (i + 1) + rectWidth * i, mMeasuredHeight - bottomMargin + dip2px(10), mTextPaint);
+            mTextPaint.getTextBounds(rectBean.getTitle(), 0, rectBean.getTitle().length(), mTextRect);
+            canvas.drawText(rectBean.getTitle(), leftMargin + spaceWidth * (i + 1) + rectWidth * i + (rectWidth - mTextRect
+                    .width()) / 2, mMeasuredHeight - bottomMargin + dip2px(5) + mTextRect.height(), mTextPaint);
         }
     }
 
