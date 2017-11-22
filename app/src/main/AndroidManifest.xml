@@ -19,6 +19,7 @@
         <activity android:name=".activity.DhActivity"/>
         <activity android:name=".activity.RectActivity"/>
         <activity android:name=".activity.ProgressActivity"/>
+        <activity android:name=".activity.RulerActivity"/>
     </application>
 
 </manifest>

@@ -8,6 +8,7 @@ import android.view.View;
 import com.yq.customview.activity.DhActivity;
 import com.yq.customview.activity.ProgressActivity;
 import com.yq.customview.activity.RectActivity;
+import com.yq.customview.activity.RulerActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, ProgressActivity.class));
+            }
+        });
+
+        findViewById(R.id.btn_ruler).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RulerActivity.class));
             }
         });
     }
