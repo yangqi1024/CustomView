@@ -26,6 +26,7 @@ public class RulerView extends View {
     private int mOffset = 0;
     private int mItemWidth = dip2px(10);
     private int mItemCount = 10;
+    private int mTotalCount = 100;
     private Paint mPaint;
     private float mStartX;
     private int mMViewWight;
@@ -65,6 +66,9 @@ public class RulerView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         // 把事件交给 VelocityTracker 处理
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
         mVelocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -80,7 +84,7 @@ public class RulerView extends View {
                 float moveX = event.getX();
                 mOffset += mStartX - moveX;
                 mStartX = moveX;
-                //mOffset = mOffset > 0 ? mOffset > mItemCount * mItemWidth * mInnerItemCount ? mItemCount * mItemWidth * mInnerItemCount : mOffset : 0;
+                mOffset = mOffset > 0 ? mOffset > mTotalCount * mItemWidth ? mTotalCount * mItemWidth : mOffset : 0;
 //                Log.d("RulerView", "mOffset=" + mOffset);
                 invalidate();
                 break;
@@ -88,13 +92,29 @@ public class RulerView extends View {
                 //计算当前速度
                 mVelocityTracker.computeCurrentVelocity(1000, mScaledMaximumFlingVelocity);
                 int xVelocity = (int) mVelocityTracker.getXVelocity();
-                Log.d("RulerView", "xVelocity=" + xVelocity);
+//                Log.d("RulerView", "xVelocity=" + xVelocity);
                 if (Math.abs(xVelocity) > mScaledMinimumFlingVelocity) {
-                    mOverScroller.fling(mOffset, 0, -xVelocity / 2, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0, 0);
+                    Log.d("RulerView", "xVelocity=" + xVelocity);
+                    mOverScroller.fling(mOffset, 0, -xVelocity / 3, 0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0, 0);
                     invalidate();
                 } else {
                     adjust();
                     invalidate();
+                }
+                //VelocityTracker回收
+                if (mVelocityTracker != null) {
+                    mVelocityTracker.recycle();
+                    mVelocityTracker = null;
+                }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                if (!mOverScroller.isFinished()) {
+                    mOverScroller.abortAnimation();
+                }
+                //VelocityTracker回收
+                if (mVelocityTracker != null) {
+                    mVelocityTracker.recycle();
+                    mVelocityTracker = null;
                 }
                 break;
             default:
@@ -116,18 +136,18 @@ public class RulerView extends View {
     @Override
     public void computeScroll() {
         if (mOverScroller.computeScrollOffset()) {
-            adjust();
             mOffset = mOverScroller.getCurrX();
-            Log.d("RulerView", "computeScrollmOffset=" + mOffset);
+            mOffset = mOffset > 0 ? mOffset > mTotalCount * mItemWidth ? mTotalCount * mItemWidth : mOffset : 0;
+            Log.d("RulerView", "mOffset=" + mOffset);
+            adjust();
             invalidate();
         }
     }
 
+
     private void adjust() {
-        if (!mOverScroller.computeScrollOffset()) {
-            int des = mOffset % mItemWidth > mItemWidth / 2 ? mItemWidth - mOffset % mItemWidth : -mOffset % mItemWidth;
-            mOverScroller.startScroll(mOffset, 0, des, 0);
-        }
+        int des = mOffset % mItemWidth > mItemWidth / 2 ? mItemWidth - mOffset % mItemWidth : -mOffset % mItemWidth;
+        mOverScroller.startScroll(mOffset, 0, des, 0);
     }
 
     private void drawTriangle(Canvas canvas) {
@@ -140,14 +160,17 @@ public class RulerView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         //获取第一个刻度
-        int offsetOutOfView = mOffset - mMViewWight / 2;
-        int indexOutOfView = offsetOutOfView / mItemWidth;
-//        Log.d("RulerView", "indexOutOfView=" + indexOutOfView);
-        int index = (int) Math.ceil(indexOutOfView);
+        int distance = mMViewWight / 2 - mOffset;
+        int left = 0;
+        if (distance < 0) {
+            left = -distance / mItemWidth;
+        }
+
 //        Log.d("RulerView", "index=" + index);
-        int startX = index * mItemWidth - offsetOutOfView;
+        int startX = mMViewWight / 2 - mOffset + left * mItemWidth;
 //        Log.d("RulerView", "startX=" + startX);
-        for (int i = 0; i < mItemCount; i++) {
+        int index = left;
+        for (int i = 0; i <= ((mTotalCount - left) < (mMViewWight / mItemWidth) ? mTotalCount - left : (mMViewWight / mItemWidth)); i++) {
             int x = startX + i * mItemWidth;
             if (index % 10 == 0) {
                 mPaint.setColor(Color.GRAY);
