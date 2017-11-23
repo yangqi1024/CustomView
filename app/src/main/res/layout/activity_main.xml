@@ -35,4 +35,11 @@
         android:layout_height="wrap_content"
         android:text="尺子"
         />
+
+    <Button
+        android:id="@+id/btn_xiaomi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="小米运动"
+        />
 </LinearLayout>
