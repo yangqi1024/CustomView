@@ -9,6 +9,7 @@ import com.yq.customview.activity.DhActivity;
 import com.yq.customview.activity.ProgressActivity;
 import com.yq.customview.activity.RectActivity;
 import com.yq.customview.activity.RulerActivity;
+import com.yq.customview.activity.UpdateActivity;
 import com.yq.customview.activity.XiaoMiActivity;
 
 
@@ -49,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, XiaoMiActivity.class));
+            }
+        });
+
+        findViewById(R.id.btn_update).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, UpdateActivity.class));
             }
         });
     }

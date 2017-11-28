@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <declare-styleable name="UpdateProgressView">
+        <attr name="text_size" format="dimension"/>
+        <attr name="text_color" format="color"/>
+        <attr name="progress_height" format="dimension"/>
+        <attr name="progress_bg" format="color"/>
+    </declare-styleable>
 </resources>
